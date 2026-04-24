@@ -319,7 +319,7 @@ const Dashboard = ({ token }) => {
             <div className="mt-2 text-3xl font-bold text-primary">
               {loading ? <Skeleton className="h-8 w-16" /> : `${progressValue}%`}
             </div>
-            <span className="mt-1 inline-block text-xs text-secondary">Across all skills</span>
+            <span className="mt-1 inline-block text-xs text-secondary">Across all tracks</span>
           </div>
           <div className="rounded-xl border border-subtle bg-card p-5 transition-all duration-200 hover:border-hover">
             <div className="flex items-center gap-2 text-xs uppercase tracking-wide text-secondary">

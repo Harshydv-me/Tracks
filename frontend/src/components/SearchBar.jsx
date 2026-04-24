@@ -106,7 +106,7 @@ const SearchBar = () => {
         <input
           ref={inputRef}
           type="text"
-          placeholder="Search skills, topics..."
+          placeholder="Search tracks, topics..."
           value={query}
           onChange={(event) => setQuery(event.target.value)}
           onKeyDown={handleKeyDown}
@@ -134,7 +134,7 @@ const SearchBar = () => {
           {results.skills.length > 0 && (
             <div>
               <div className="border-b border-subtle bg-main px-4 py-2 text-xs font-medium uppercase tracking-wider text-muted">
-                Skills
+                Tracks
               </div>
               {results.skills.map((skill) => (
                 <div

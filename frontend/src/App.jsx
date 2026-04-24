@@ -8,6 +8,7 @@ import Profile from "./pages/Profile.jsx";
 import Progress from "./pages/Progress.jsx";
 import SearchPage from "./pages/SearchPage.jsx";
 import PublicProfile from "./pages/PublicProfile.jsx";
+import LandingPage from "./pages/LandingPage.jsx";
 
 const App = () => {
   const location = useLocation();
@@ -20,8 +21,16 @@ const App = () => {
   return (
     <Routes>
       <Route
+        path="/"
+        element={token ? <Navigate to="/dashboard" replace /> : <LandingPage />}
+      />
+      <Route
         path="/login"
-        element={token ? <Navigate to="/" replace /> : <Login setToken={setToken} />}
+        element={token ? <Navigate to="/dashboard" replace /> : <Login setToken={setToken} />}
+      />
+      <Route
+        path="/dashboard"
+        element={token ? <Dashboard token={token} /> : <Navigate to="/login" replace />}
       />
       <Route
         path="/roadmap"
@@ -46,7 +55,7 @@ const App = () => {
       <Route path="/u/:username" element={<PublicProfile />} />
       <Route
         path="/*"
-        element={token ? <Dashboard token={token} /> : <Navigate to="/login" replace />}
+        element={token ? <Navigate to="/dashboard" replace /> : <Navigate to="/" replace />}
       />
     </Routes>
   );

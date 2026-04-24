@@ -156,7 +156,7 @@ const LearningHub = () => {
         <div>
           <h1 className="text-3xl font-bold text-primary">Learning</h1>
           <p className="mt-1 text-sm text-secondary">
-            Continue building your skills step by step.
+            Continue building your tracks step by step.
           </p>
         </div>
 
@@ -193,7 +193,7 @@ const LearningHub = () => {
 
         <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-[1fr_380px]">
           <div>
-            <div className="mb-4 text-sm font-semibold text-primary">Skills</div>
+            <div className="mb-4 text-sm font-semibold text-primary">Tracks</div>
             {loading ? (
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 {Array.from({ length: 2 }).map((_, idx) => (
@@ -241,14 +241,14 @@ const LearningHub = () => {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2 text-sm text-secondary">
                     <Target size={16} className="text-[#6366f1]" />
-                    Skills in progress
+                    Tracks in progress
                   </div>
                   <div className="text-sm font-semibold text-primary">{inProgressCount}</div>
                 </div>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2 text-sm text-secondary">
                     <CheckCircle2 size={16} className="text-green-400" />
-                    Skills completed
+                    Tracks completed
                   </div>
                   <div className="text-sm font-semibold text-primary">{completedCount}</div>
                 </div>

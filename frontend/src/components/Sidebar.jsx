@@ -12,7 +12,7 @@ const Sidebar = () => {
     <aside className="hidden h-screen w-64 flex-col border-r border-slate-800/60 bg-gradient-to-b from-slate-950 via-slate-900/70 to-slate-950 px-5 py-6 backdrop-blur-xl md:flex">
       <div className="mb-10">
         <div className="text-lg font-semibold tracking-wide text-slate-100">
-          LearnFlow
+          Tracks
         </div>
         <div className="text-xs text-slate-500">Premium Learning Suite</div>
       </div>

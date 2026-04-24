@@ -73,7 +73,7 @@ const Progress = () => {
         <div>
           <h1 className="text-3xl font-bold text-primary">Progress</h1>
           <p className="mt-1 text-sm text-secondary">
-            Track your learning journey across all skills.
+            Track your learning journey across all tracks.
           </p>
         </div>
 
@@ -265,11 +265,11 @@ const Progress = () => {
             </div>
 
             <div className="mt-6">
-              <div className="mb-4 text-sm font-semibold text-primary">Skills Breakdown</div>
+              <div className="mb-4 text-sm font-semibold text-primary">Tracks Breakdown</div>
               {skills.length === 0 ? (
                 <div className="rounded-xl border border-subtle bg-card p-8 text-center">
                   <Layers size={32} className="mx-auto text-muted" />
-                  <div className="mt-2 text-sm text-secondary">No skills data yet</div>
+                  <div className="mt-2 text-sm text-secondary">No tracks data yet</div>
                 </div>
               ) : (
                 skills.map((skill) => (

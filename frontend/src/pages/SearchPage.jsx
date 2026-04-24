@@ -99,7 +99,7 @@ const SearchPage = () => {
               onClick={() => navigate("/roadmap")}
               className="mt-6 rounded-lg bg-[#6366f1] px-5 py-2.5 text-sm text-white transition-all duration-200 hover:bg-indigo-500"
             >
-              Browse All Skills →
+              Browse All Tracks →
             </button>
           </div>
         )}
@@ -107,7 +107,7 @@ const SearchPage = () => {
         {!loading && results.skills.length > 0 && (
           <section className="mt-8">
             <div className="mb-3 flex items-center text-sm font-semibold text-primary">
-              Skills
+              Tracks
               <span className="ml-2 rounded-full bg-skeleton px-2 py-0.5 text-xs text-secondary">
                 {results.skills.length}
               </span>

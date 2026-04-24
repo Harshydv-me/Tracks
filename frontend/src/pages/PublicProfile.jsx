@@ -116,7 +116,7 @@ const PublicProfile = () => {
           </div>
 
           <div className="mt-8">
-            <div className="mb-6 text-xl font-bold text-primary">Skills</div>
+            <div className="mb-6 text-xl font-bold text-primary">Tracks</div>
             {(profile?.skills || []).map((skill) => (
               <div
                 key={skill.id}

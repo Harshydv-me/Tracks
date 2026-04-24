@@ -16,10 +16,7 @@ const Navbar = () => {
   };
 
   const isActive = (path) => {
-    if (path === "/") {
-      return location.pathname === "/" || location.pathname === "/dashboard";
-    }
-    return location.pathname.startsWith(path);
+    return location.pathname === path;
   };
 
   const linkClass = (path) =>
@@ -32,12 +29,12 @@ const Navbar = () => {
   return (
     <nav className="border-b border-gray-200 dark:border-subtle bg-white dark:bg-card px-6 py-4 transition-colors duration-200">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-6">
-        <div className="text-lg font-bold text-black dark:text-primary">LearnFlow</div>
+        <div className="text-lg font-bold text-black dark:text-primary">Tracks</div>
         <div className="hidden flex-1 items-center justify-center md:flex">
           <SearchBar />
         </div>
         <div className="hidden items-center gap-6 md:flex">
-          <Link to="/" className={linkClass("/")}>
+          <Link to="/dashboard" className={linkClass("/dashboard")}>
             Dashboard
           </Link>
           <Link to="/learning" className={linkClass("/learning")}>

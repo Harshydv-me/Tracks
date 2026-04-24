@@ -1,10 +1,20 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { login, register } from "../api/dashboard.js";
 
 const Login = ({ setToken }) => {
   const navigate = useNavigate();
-  const [mode, setMode] = useState("login");
+  const [searchParams] = useSearchParams();
+  const initialMode = searchParams.get("mode") === "register" ? "register" : "login";
+  
+  const [mode, setMode] = useState(initialMode);
+
+  useEffect(() => {
+    const m = searchParams.get("mode");
+    if (m === "register" || m === "login") {
+      setMode(m);
+    }
+  }, [searchParams]);
   const [displayName, setDisplayName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -35,7 +45,7 @@ const Login = ({ setToken }) => {
       }
 
       setToken(payload.token);
-      navigate("/");
+      navigate("/dashboard");
     } catch (err) {
       setError(err.message || "Request failed");
     } finally {
@@ -47,11 +57,11 @@ const Login = ({ setToken }) => {
     <div className="flex min-h-screen items-center justify-center bg-main px-4">
       <div className="w-full max-w-md rounded-2xl border border-subtle bg-card p-8 shadow-xl">
         <div className="text-center">
-          <div className="bg-gradient-to-r from-indigo-400 to-blue-400 bg-clip-text text-2xl font-semibold text-transparent">
-            LearnFlow
+          <div className="bg-gradient-to-r from-blue-600 to-indigo-500 bg-clip-text text-3xl font-bold text-transparent">
+            Tracks
           </div>
           <p className="mt-2 text-sm text-secondary">
-            Level up your technical skills with daily practice.
+            Level up your technical knowledge with daily practice.
           </p>
         </div>
 

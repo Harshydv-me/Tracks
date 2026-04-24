@@ -232,7 +232,7 @@ const Profile = () => {
                 <div className="mt-2 text-2xl font-bold text-primary">
                   {stats.totalSkillsStarted}
                 </div>
-                <div className="mt-1 text-xs text-secondary">Skills Started</div>
+                <div className="mt-1 text-xs text-secondary">Tracks Started</div>
               </div>
               <div className="rounded-xl border border-subtle bg-card p-4 text-center">
                 <Flame size={20} className="mx-auto text-yellow-400" />
