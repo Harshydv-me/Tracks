@@ -1,5 +1,6 @@
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:3000";
+const API_BASE = "https://skills-backend.onrender.com";
 const API_ROOT = `${API_BASE}/api`;
+console.log("🔗 Dashboard API Base forced to:", API_BASE);
 
 const request = async (path, { method = "GET", data, token } = {}) => {
   const headers = {};
