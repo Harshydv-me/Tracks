@@ -17,7 +17,7 @@ services:
         generateValue: true
       - key: CLIENT_URL
         fromService:
-          type: static_site
+          type: static
           name: skills-frontend
           property: url
       - key: GEMINI_API_KEY
@@ -28,7 +28,7 @@ services:
         value: 20
 
   # Frontend Static Site
-  - type: static_site
+  - type: static
     name: skills-frontend
     env: static
     plan: free
