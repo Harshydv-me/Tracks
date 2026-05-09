@@ -8,7 +8,7 @@ export async function generateTaskContent(
   topicTitle,
   skillName
 ) {
-  const modelName = process.env.GEMINI_MODEL || "gemini-1.5-flash";
+  const modelName = process.env.GEMINI_MODEL || "gemini-pro";
   const model = genAI.getGenerativeModel({ model: modelName });
 
   const prompt = `

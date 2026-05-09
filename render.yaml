@@ -20,7 +20,7 @@ services:
       - key: GEMINI_API_KEY
         sync: false
       - key: GEMINI_MODEL
-        value: gemini-1.5-flash
+        value: gemini-pro
       - key: NODE_VERSION
         value: 20
 
