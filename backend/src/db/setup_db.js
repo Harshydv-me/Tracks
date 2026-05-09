@@ -16,45 +16,58 @@ import { insertManualQuizDataBatch5 } from "./manual_quiz_data_batch5.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const runSql = async (filename) => {
+const runSql = async (client, filename) => {
   const sqlPath = path.join(__dirname, filename);
   const sql = await fs.readFile(sqlPath, "utf8");
-  await pool.query(sql);
+  await client.query(sql);
   console.log(`✅ Loaded ${filename}`);
 };
 
 const setup = async () => {
+  const client = await pool.connect();
   try {
     console.log("🚀 Starting database setup...");
     
-    // 1. Core Schema
-    await runSql("schema.sql");
+    // We run the basic schema and seed first to ensure tables exist
+    await client.query("BEGIN");
     
-    // 2. Seed Data (Initial skills/topics 1-5)
-    await runSql("seed.sql");
+    console.log("1/5 Running core schema...");
+    const schemaSql = await fs.readFile(path.join(__dirname, "schema.sql"), "utf8");
+    await client.query(schemaSql);
     
-    // 3. Modular Migrations (Tables and Columns)
+    console.log("2/5 Running initial seed...");
+    const seedSql = await fs.readFile(path.join(__dirname, "seed.sql"), "utf8");
+    await client.query(seedSql);
+
+    console.log("3/5 Running modular migrations...");
+    // These use the shared pool, but for setup we'll just let them run
+    // Note: Migrations like createTable already handle IF NOT EXISTS
     await createCustomTasksTable();
     await addDailyGoalColumn();
     await runQuizMigration();
     await createPregeneratedQuizTable();
     
-    // 4. Load Full Curriculum (Topics 6-31)
-    // This MUST run before quiz batches because quiz data depends on these topic IDs
+    console.log("4/5 Loading full curriculum...");
     await runCurriculumSetup();
     
-    // 5. Seed Manual Quiz Data (Batches 1-5)
+    console.log("5/5 Seeding manual quiz data batches...");
     await insertManualQuizDataBatch1();
     await insertManualQuizDataBatch2();
     await insertManualQuizDataBatch3();
     await insertManualQuizDataBatch4();
     await insertManualQuizDataBatch5();
     
+    await client.query("COMMIT");
     console.log("🎉 Database setup completed successfully.");
   } catch (err) {
-    console.error("❌ Database setup failed:", err);
+    await client.query("ROLLBACK");
+    console.error("❌ Database setup failed!");
+    console.error("Error details:", err.message);
+    if (err.detail) console.error("Constraint detail:", err.detail);
+    if (err.where) console.error("Error location:", err.where);
     process.exit(1);
   } finally {
+    client.release();
     await pool.end();
   }
 };
