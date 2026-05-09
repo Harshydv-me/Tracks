@@ -1,4 +1,5 @@
 const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:3000/api";
+console.log("🔗 API_BASE set to:", API_BASE);
 
 const request = async (path, { method = "GET", data, token } = {}) => {
   const headers = {};
@@ -29,7 +30,7 @@ const request = async (path, { method = "GET", data, token } = {}) => {
 
 const api = {
   login: (data) => request("/auth/login", { method: "POST", data }),
-  signup: (data) => request("/auth/signup", { method: "POST", data }),
+  signup: (data) => request("/auth/register", { method: "POST", data }),
   getDashboard: (token) => request("/progress/dashboard", { token }),
   getStreak: (token) => request("/streak", { token }),
   getTasks: (topicId, token) => request(`/tasks/${topicId}`, { token }),
