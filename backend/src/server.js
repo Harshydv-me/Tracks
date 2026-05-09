@@ -19,12 +19,7 @@ import { requireAuth } from "./middleware/auth.js";
 
 const app = express();
 
-app.use(
-  cors({
-    origin: "*",
-    credentials: true
-  })
-);
+app.use(cors());
 app.use(express.json());
 
 app.get("/health", (_req, res) => {

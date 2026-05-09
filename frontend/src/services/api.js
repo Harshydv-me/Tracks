@@ -1,4 +1,4 @@
-const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:3000/api";
+const API_BASE = (import.meta.env.VITE_API_BASE || "http://localhost:3000/api").replace(/\/$/, "");
 console.log("🔗 API_BASE set to:", API_BASE);
 
 const request = async (path, { method = "GET", data, token } = {}) => {
@@ -10,7 +10,8 @@ const request = async (path, { method = "GET", data, token } = {}) => {
     headers.Authorization = `Bearer ${token}`;
   }
 
-  const response = await fetch(`${API_BASE}${path}`, {
+  const fullPath = path.startsWith("/") ? path : `/${path}`;
+  const response = await fetch(`${API_BASE}${fullPath}`, {
     method,
     headers,
     body: data !== undefined ? JSON.stringify(data) : undefined
