@@ -10,6 +10,7 @@
     "migrate:custom": "node src/db/custom_tasks_migration.js",
     "migrate:goals": "node src/db/user_goals_migration.js",
     "migrate:quiz": "node src/db/quiz_migration.js",
+    "db:setup": "node src/db/setup_db.js",
     "curriculum": "node src/db/run_curriculum.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
