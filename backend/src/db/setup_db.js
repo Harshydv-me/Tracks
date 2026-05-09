@@ -6,9 +6,12 @@ import { createCustomTasksTable } from "./custom_tasks_migration.js";
 import { addDailyGoalColumn } from "./user_goals_migration.js";
 import { runQuizMigration } from "./quiz_migration.js";
 import { createPregeneratedQuizTable } from "./pregenerated_quiz_migration.js";
+import { runCurriculumSetup } from "./run_curriculum.js";
 import { insertManualQuizDataBatch1 } from "./manual_quiz_data.js";
 import { insertManualQuizDataBatch2 } from "./manual_quiz_data_batch2.js";
 import { insertManualQuizDataBatch3 } from "./manual_quiz_data_batch3.js";
+import { insertManualQuizDataBatch4 } from "./manual_quiz_data_batch4.js";
+import { insertManualQuizDataBatch5 } from "./manual_quiz_data_batch5.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -27,19 +30,25 @@ const setup = async () => {
     // 1. Core Schema
     await runSql("schema.sql");
     
-    // 2. Seed Data
+    // 2. Seed Data (Initial skills/topics 1-5)
     await runSql("seed.sql");
     
-    // 3. Modular Migrations
+    // 3. Modular Migrations (Tables and Columns)
     await createCustomTasksTable();
     await addDailyGoalColumn();
     await runQuizMigration();
     await createPregeneratedQuizTable();
     
-    // 4. Seed Quiz Data
+    // 4. Load Full Curriculum (Topics 6-31)
+    // This MUST run before quiz batches because quiz data depends on these topic IDs
+    await runCurriculumSetup();
+    
+    // 5. Seed Manual Quiz Data (Batches 1-5)
     await insertManualQuizDataBatch1();
     await insertManualQuizDataBatch2();
     await insertManualQuizDataBatch3();
+    await insertManualQuizDataBatch4();
+    await insertManualQuizDataBatch5();
     
     console.log("🎉 Database setup completed successfully.");
   } catch (err) {

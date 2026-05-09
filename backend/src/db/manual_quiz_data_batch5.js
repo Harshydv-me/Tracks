@@ -1,3 +1,4 @@
+import { fileURLToPath } from "url";
 import pool from "./index.js";
 
 const quizData = [
@@ -73,7 +74,7 @@ const quizData = [
       { q: "What is a 'Dashboard' in monitoring?", o: {A: "The car's console", B: "A visual display of the most important metrics and system status", C: "A type of login screen", D: "A code editor"}, c: "B", e: "Dashboards (like Grafana) provide at-a-glance visibility." },
       { q: "What does 'SLA' stand for?", o: {A: "System Log Archive", B: "Service Level Agreement", C: "Simple Level Access", D: "Standard Link API"}, c: "B", e: "An SLA is a commitment between a service provider and a client." },
       { q: "What is the 'Golden Signals' of monitoring?", o: {A: "Red, Green, Yellow", B: "Latency, Traffic, Errors, and Saturation", C: "CPU, RAM, Disk, Network", D: "Speed, Cost, Security"}, c: "B", e: "These four signals are key to monitoring user-facing systems." },
-      { q: "What is 'Log Aggregation'?", o: {A: "Deleting logs", B: "Collecting logs from all sources into a single, searchable central location", C: "Summarizing logs by hand", D: "A type of encryption"}, c: "B", e: "Tools like ELK Stack (Elasticsearch, Logstash, Kibana) automate this." }
+      { q: "What is 'Log Aggregation'?", o: {A: "Deleting logs", B: "Collecting logs from all sources into a single, searchable central location", C: "Summarizing logs by hand", D: "A type of encryption"}, c: "B", e: "Log Aggregation tools help developers find errors across many servers." }
     ]
   },
   {
@@ -93,8 +94,14 @@ const quizData = [
   }
 ];
 
-const insertData = async () => {
+export const insertManualQuizDataBatch5 = async () => {
   try {
+    const check = await pool.query("SELECT COUNT(*) FROM topic_quiz_questions WHERE topic_id IN (26,27,28,29,30,31)");
+    if (parseInt(check.rows[0].count) > 0) {
+      console.log("⏩ Batch 5 quiz data already exists. Skipping.");
+      return;
+    }
+
     for (const topic of quizData) {
       console.log(`Inserting questions for topic ${topic.topic_id}...`);
       for (const q of topic.questions) {
@@ -107,11 +114,14 @@ const insertData = async () => {
       }
     }
     console.log("✅ Batch 5 Inserted!");
-    process.exit(0);
   } catch (err) {
-    console.error(err);
-    process.exit(1);
+    console.error("❌ Batch 5 Insertion failed:", err);
+    throw err;
   }
 };
 
-insertData();
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  insertManualQuizDataBatch5()
+    .then(() => process.exit(0))
+    .catch(() => process.exit(1));
+}
