@@ -1,4 +1,3 @@
-import { fileURLToPath } from "url";
 import pool from "./index.js";
 
 const quizData = [
