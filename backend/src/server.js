@@ -17,10 +17,6 @@ import customTasksRoutes from "./modules/custom-tasks/customTasks.routes.js";
 import quizRoutes from "./modules/quiz/quiz.routes.js";
 import { requireAuth } from "./middleware/auth.js";
 
-if (!process.env.ANTHROPIC_API_KEY) {
-  console.warn("WARNING: ANTHROPIC_API_KEY is not set in .env");
-}
-
 const app = express();
 
 app.use(
