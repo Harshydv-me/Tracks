@@ -1,4 +1,5 @@
 const API_BASE = "https://skills-backend.onrender.com/api";
+console.log("🛑 VERSION: V4 (FORCED PROD)");
 console.log("🔗 Production API Base forced to:", API_BASE);
 
 const request = async (path, { method = "GET", data, token } = {}) => {
