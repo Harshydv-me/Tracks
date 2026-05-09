@@ -15,13 +15,8 @@ services:
         value: 10000
       - key: JWT_SECRET
         generateValue: true
-      - key: FRONTEND_HOST
-        fromService:
-          type: web
-          name: skills-frontend
-          property: host
       - key: CLIENT_URL
-        value: https://${FRONTEND_HOST}.onrender.com
+        value: https://skills-frontend.onrender.com
       - key: GEMINI_API_KEY
         sync: false
       - key: GEMINI_MODEL
@@ -36,13 +31,8 @@ services:
     buildCommand: cd frontend && npm install && npm run build
     staticPublishPath: frontend/dist
     envVars:
-      - key: BACKEND_HOST
-        fromService:
-          type: web
-          name: skills-backend
-          property: host
       - key: VITE_API_BASE
-        value: https://${BACKEND_HOST}.onrender.com/api
+        value: https://skills-backend.onrender.com/api
       - key: NODE_VERSION
         value: 20
 
