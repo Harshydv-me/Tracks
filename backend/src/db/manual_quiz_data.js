@@ -1,3 +1,4 @@
+import { fileURLToPath } from "url";
 import pool from "./index.js";
 
 const quizData = [
@@ -78,8 +79,14 @@ const quizData = [
   }
 ];
 
-const insertData = async () => {
+export const insertManualQuizDataBatch1 = async () => {
   try {
+    const check = await pool.query("SELECT COUNT(*) FROM topic_quiz_questions WHERE topic_id IN (1,2,3,4,5)");
+    if (parseInt(check.rows[0].count) > 0) {
+      console.log("⏩ Batch 1 quiz data already exists. Skipping.");
+      return;
+    }
+
     for (const topic of quizData) {
       console.log(`Inserting questions for topic ${topic.topic_id}...`);
       for (const q of topic.questions) {
@@ -92,11 +99,14 @@ const insertData = async () => {
       }
     }
     console.log("✅ Batch 1 Inserted!");
-    process.exit(0);
   } catch (err) {
-    console.error(err);
-    process.exit(1);
+    console.error("❌ Batch 1 Insertion failed:", err);
+    throw err;
   }
 };
 
-insertData();
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  insertManualQuizDataBatch1()
+    .then(() => process.exit(0))
+    .catch(() => process.exit(1));
+}

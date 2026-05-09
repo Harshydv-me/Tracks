@@ -1,6 +1,7 @@
+import { fileURLToPath } from "url";
 import pool from "./index.js";
 
-const createCustomTasksTable = async () => {
+export const createCustomTasksTable = async () => {
   const query = `
     CREATE TABLE IF NOT EXISTS custom_tasks (
       id SERIAL PRIMARY KEY,
@@ -28,6 +29,8 @@ const createCustomTasksTable = async () => {
   }
 };
 
-createCustomTasksTable()
-  .then(() => process.exit(0))
-  .catch(() => process.exit(1));
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  createCustomTasksTable()
+    .then(() => process.exit(0))
+    .catch(() => process.exit(1));
+}

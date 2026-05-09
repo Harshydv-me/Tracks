@@ -1,6 +1,7 @@
+import { fileURLToPath } from "url";
 import pool from "./index.js";
 
-const addDailyGoalColumn = async () => {
+export const addDailyGoalColumn = async () => {
   const query = `
     ALTER TABLE users
     ADD COLUMN IF NOT EXISTS daily_goal INTEGER DEFAULT 3;
@@ -15,6 +16,8 @@ const addDailyGoalColumn = async () => {
   }
 };
 
-addDailyGoalColumn()
-  .then(() => process.exit(0))
-  .catch(() => process.exit(1));
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  addDailyGoalColumn()
+    .then(() => process.exit(0))
+    .catch(() => process.exit(1));
+}

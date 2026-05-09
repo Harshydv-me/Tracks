@@ -1,9 +1,10 @@
+import { fileURLToPath } from "url";
 import dotenv from "dotenv";
 import pool from "./index.js";
 
 dotenv.config();
 
-const run = async () => {
+export const runQuizMigration = async () => {
   try {
     await pool.query(`
       CREATE TABLE IF NOT EXISTS quiz_attempts (
@@ -72,13 +73,21 @@ const run = async () => {
         ON quiz_attempts(user_id, topic_id);
     `);
 
-    console.log("Quiz migration complete");
+    console.log("✅ Quiz migration complete");
   } catch (error) {
-    console.error("Quiz migration failed:", error);
-    process.exitCode = 1;
-  } finally {
-    await pool.end();
+    console.error("❌ Quiz migration failed:", error);
+    throw error;
   }
 };
 
-run();
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  runQuizMigration()
+    .then(() => {
+      console.log("Migration finished");
+      process.exit(0);
+    })
+    .catch((err) => {
+      console.error(err);
+      process.exit(1);
+    });
+}

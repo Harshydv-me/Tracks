@@ -1,6 +1,7 @@
+import { fileURLToPath } from "url";
 import pool from "./index.js";
 
-const createPregeneratedQuizTable = async () => {
+export const createPregeneratedQuizTable = async () => {
   const query = `
     CREATE TABLE IF NOT EXISTS topic_quiz_questions (
       id SERIAL PRIMARY KEY,
@@ -24,6 +25,8 @@ const createPregeneratedQuizTable = async () => {
   }
 };
 
-createPregeneratedQuizTable()
-  .then(() => process.exit(0))
-  .catch(() => process.exit(1));
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  createPregeneratedQuizTable()
+    .then(() => process.exit(0))
+    .catch(() => process.exit(1));
+}
