@@ -1,5 +1,5 @@
-const API_BASE = (import.meta.env.VITE_API_BASE || "http://localhost:3000/api").replace(/\/$/, "");
-console.log("🔗 API_BASE set to:", API_BASE);
+const API_BASE = "https://skills-backend.onrender.com/api";
+console.log("🔗 Production API Base forced to:", API_BASE);
 
 const request = async (path, { method = "GET", data, token } = {}) => {
   const headers = {};
